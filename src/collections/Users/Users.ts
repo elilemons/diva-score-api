@@ -1,8 +1,16 @@
 import { CollectionConfig } from 'payload/types'
+import generateForgotPasswordEmail from './generateForgotPasswordEmail'
 
 const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  auth: {
+    tokenExpiration: 1814400,
+    verify: true,
+    depth: 0,
+    forgotPassword: {
+      generateEmailHTML: generateForgotPasswordEmail,
+    },
+  },
   admin: {
     useAsTitle: 'email',
   },

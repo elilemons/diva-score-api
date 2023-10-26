@@ -6,7 +6,7 @@ import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
-import Users from './collections/Users'
+import Users from './collections/Users/Users'
 
 export default buildConfig({
   admin: {

@@ -5,7 +5,8 @@
   "main": "dist/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
+    "dev": " sh -ac '. .env.development; PORT=18015 cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon'",
+    "dev:production": " sh -ac '. .env.production; PORT=18015 cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon'",
     "build:payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload build",
     "build:server": "tsc",
     "build": "yarn copyfiles && yarn build:payload && yarn build:server",
@@ -25,6 +26,8 @@
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "handlebars": "^4.7.8",
+    "inline-css": "^4.0.2",
     "payload": "^2.0.0"
   },
   "devDependencies": {
