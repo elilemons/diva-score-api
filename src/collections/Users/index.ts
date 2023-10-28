@@ -1,10 +1,11 @@
 import { CollectionConfig } from 'payload/types'
+import { isAdminOrRequestingSelf } from '../../access/roles'
 
 const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     tokenExpiration: 1814400,
-    verify: true,
+    // verify: true, // TODO
     depth: 0,
     forgotPassword: {
       // generateEmailHTML: generateForgotPasswordEmail, // TODO
@@ -12,6 +13,12 @@ const Users: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'email',
+  },
+  access: {
+    create: () => true,
+    read: () => true,
+    update: isAdminOrRequestingSelf,
+    delete: isAdminOrRequestingSelf,
   },
   fields: [
     // Email added by default
