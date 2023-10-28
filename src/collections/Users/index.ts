@@ -1,5 +1,4 @@
 import { CollectionConfig } from 'payload/types'
-import generateForgotPasswordEmail from './generateForgotPasswordEmail'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -8,7 +7,7 @@ const Users: CollectionConfig = {
     verify: true,
     depth: 0,
     forgotPassword: {
-      generateEmailHTML: generateForgotPasswordEmail,
+      // generateEmailHTML: generateForgotPasswordEmail, // TODO
     },
   },
   admin: {
