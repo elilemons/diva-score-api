@@ -6,16 +6,18 @@ import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
-import Users from './collections/Users/Users'
+import Users from './collections/Users'
+import Admins from './collections/Admins'
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
+    user: Admins.slug,
     bundler: webpackBundler(),
   },
   editor: slateEditor({}),
-  collections: [Users],
+  collections: [Admins, Users],
   typescript: {
+    declare: false, // Makes this useable in a non-payload lib
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
   graphQL: {
