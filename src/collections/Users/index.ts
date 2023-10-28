@@ -5,7 +5,7 @@ const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     tokenExpiration: 1814400,
-    // verify: true, // TODO
+    verify: true, // TODO Generate a custom email that verifies from the frontend
     depth: 0,
     forgotPassword: {
       // generateEmailHTML: generateForgotPasswordEmail, // TODO
