@@ -1,11 +1,14 @@
 import { CollectionConfig } from 'payload/types'
 import { isAdminOrRequestingSelf } from '../../access/roles'
+import generateVerifyEmail from './generateVerifyEmail'
 
 const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     tokenExpiration: 1814400,
-    verify: true, // TODO Generate a custom email that verifies from the frontend
+    verify: {
+      generateEmailHTML: generateVerifyEmail,
+    },
     depth: 0,
     forgotPassword: {
       // generateEmailHTML: generateForgotPasswordEmail, // TODO
