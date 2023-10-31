@@ -2524,6 +2524,13 @@
     "@types/connect" "*"
     "@types/node" "*"
 
+"@types/cheerio@*":
+  version "0.22.33"
+  resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.33.tgz#e4792408b107384d7d7469e3b4d31408078ec620"
+  integrity sha512-XUlu2BK4q3xJsccRLK69m/cABZd7m60o+cDEPUTG6jTpuG2vqN35UioeF99MQ/HoSOEPq0Bgil8g3jtzE0oH9A==
+  dependencies:
+    "@types/node" "*"
+
 "@types/connect@*":
   version "3.4.37"
   resolved "https://registry.npmjs.org/@types/connect/-/connect-3.4.37.tgz"
@@ -2604,6 +2611,13 @@
   version "2.0.3"
   resolved "https://registry.npmjs.org/@types/http-errors/-/http-errors-2.0.3.tgz"
   integrity sha512-pP0P/9BnCj1OVvQR2lF41EkDG/lWWnDyA203b/4Fmi2eTyORnBtcDoKDwjWQthELrBvWkMOrvSOnZ8OVlW6tXA==
+
+"@types/inline-css@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/inline-css/-/inline-css-3.0.2.tgz#39646e3431145763dd2a32c890b58d4cb684bfa5"
+  integrity sha512-+4gw73fcymnsCCrM54Zxh3HbUfM56O5gPNaEnNzv4Pndkya6jcBdtEH4DWUXEJf37xYxxxpK1hgxa3XYbCr2ZQ==
+  dependencies:
+    "@types/cheerio" "*"
 
 "@types/is-hotkey@^0.1.1":
   version "0.1.8"
