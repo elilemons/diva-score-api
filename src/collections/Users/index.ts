@@ -1,5 +1,7 @@
 import { CollectionConfig } from 'payload/types'
 import { isAdminOrRequestingSelf } from '../../access/roles'
+import { generateForgotPasswordToken } from './endpoints/generateForgotPasswordToken'
+import generateForgotPasswordEmail from './generateForgotPasswordEmail'
 import generateVerifyEmail from './generateVerifyEmail'
 
 const Users: CollectionConfig = {
@@ -11,7 +13,7 @@ const Users: CollectionConfig = {
     },
     depth: 0,
     forgotPassword: {
-      // generateEmailHTML: generateForgotPasswordEmail, // TODO
+      generateEmailHTML: generateForgotPasswordEmail,
     },
   },
   admin: {
@@ -26,6 +28,13 @@ const Users: CollectionConfig = {
   fields: [
     // Email added by default
     // Add more fields as needed
+  ],
+  endpoints: [
+    {
+      path: '/generate-forgot-password-token',
+      method: 'get',
+      handler: generateForgotPasswordToken,
+    },
   ],
 }
 
