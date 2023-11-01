@@ -1,4 +1,4 @@
-import generateEmailHTML from '../../email/generateEmailHTML'
+import generateEmailHTML from '../../../email/generateEmailHTML'
 
 const generateVerifyEmail = async ({ token }): Promise<string> =>
   generateEmailHTML({
