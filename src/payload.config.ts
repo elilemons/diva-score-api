@@ -17,6 +17,7 @@ dotenv.config({
 const mockModulePath = path.resolve(__dirname, './mocks/emptyModule.js')
 
 export default buildConfig({
+  serverURL: process.env.PAYLOAD_PUBLIC_SERVER_URL,
   admin: {
     user: Admins.slug,
     bundler: webpackBundler(),
