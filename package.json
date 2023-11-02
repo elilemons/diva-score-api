@@ -20,6 +20,7 @@
     "test": "jest --forceExit --runInBand --detectOpenHandles"
   },
   "dependencies": {
+    "@elilemons/diva-score-lib": "^0.1.0",
     "@payloadcms/bundler-webpack": "^1.0.0",
     "@payloadcms/db-mongodb": "^1.0.0",
     "@payloadcms/plugin-cloud": "^2.0.0",

@@ -1281,6 +1281,14 @@
   dependencies:
     tslib "^2.0.0"
 
+"@elilemons/diva-score-lib@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@elilemons/diva-score-lib/-/diva-score-lib-0.1.0.tgz#3c61a449e984cc2a62038224787aa98dc4f32db6"
+  integrity sha512-SkSdMLMw6ulOO3MNEYV/hCljYtCTGi2Wvclk7BHWVwL63wpAIb7dtnaFYrRLPeLAAy46VGHh6AyIVlzjod1IQQ==
+  dependencies:
+    tsc "^2.0.4"
+    typescript "^4.6.4"
+
 "@emotion/babel-plugin@^11.11.0":
   version "11.11.0"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.11.0.tgz#c2d872b6a7767a9d176d007f5b31f7d504bb5d6c"
@@ -10822,6 +10830,11 @@ ts-node@^9.1.1:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
+tsc@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/tsc/-/tsc-2.0.4.tgz#5f6499146abea5dca4420b451fa4f2f9345238f5"
+  integrity sha512-fzoSieZI5KKJVBYGvwbVZs/J5za84f2lSTLPYf6AGiIf43tZ3GNrI1QzTLcjtyDDP4aLxd46RTZq1nQxe7+k5Q==
+
 tsconfig-paths@^3.14.2:
   version "3.14.2"
   resolved "https://registry.npmjs.org/tsconfig-paths/-/tsconfig-paths-3.14.2.tgz"
@@ -10951,6 +10964,11 @@ typescript@*:
   version "5.2.2"
   resolved "https://registry.npmjs.org/typescript/-/typescript-5.2.2.tgz"
   integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
+
+typescript@^4.6.4:
+  version "4.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.5.tgz#095979f9bcc0d09da324d58d03ce8f8374cbe65a"
+  integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
 
 uglify-js@^3.1.4:
   version "3.17.4"
