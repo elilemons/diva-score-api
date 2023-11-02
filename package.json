@@ -29,7 +29,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.8",
     "inline-css": "^4.0.2",
-    "payload": "^2.0.0"
+    "payload": "2.0.14"
   },
   "devDependencies": {
     "@payloadcms/eslint-config": "^1.0.0",
