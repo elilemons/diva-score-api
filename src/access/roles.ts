@@ -1,5 +1,5 @@
-import { PayloadRequest } from 'payload/dist/express/types'
 import { AuthCollectionSlugs } from '@elilemons/diva-score-lib'
+import { PayloadRequest } from 'payload/dist/express/types'
 import { FieldAccess } from 'payload/types'
 
 export const checkCollection = (
