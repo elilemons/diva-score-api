@@ -8,6 +8,7 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
 import Admins from './collections/Admins'
+import Surveys from './collections/Surveys'
 import Users from './collections/Users'
 
 dotenv.config({
@@ -42,7 +43,7 @@ export default buildConfig({
   },
 
   editor: slateEditor({}),
-  collections: [Admins, Users],
+  collections: [Admins, Surveys, Users],
   typescript: {
     declare: false, // Makes this useable in a non-payload lib
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
