@@ -1,6 +1,4 @@
-const adminTestCredentials = {
-  email: 'dev@divascore.app',
+export default {
+  email: 'test@test.com',
   password: 'test',
 }
-
-export default adminTestCredentials
