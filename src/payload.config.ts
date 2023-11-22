@@ -8,6 +8,7 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
 import Admins from './collections/Admins'
+import QuestionSets from './collections/QuestionSets'
 import Surveys from './collections/Surveys'
 import Users from './collections/Users'
 
@@ -43,7 +44,7 @@ export default buildConfig({
   },
 
   editor: slateEditor({}),
-  collections: [Admins, Surveys, Users],
+  collections: [Admins, Surveys, QuestionSets, Users],
   typescript: {
     declare: false, // Makes this useable in a non-payload lib
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
