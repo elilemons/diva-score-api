@@ -9,6 +9,8 @@
 export interface Config {
   collections: {
     admins: Admin;
+    surveys: Survey;
+    questionSets: QuestionSet;
     users: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -20,28 +22,83 @@ export interface Admin {
   updatedAt: string;
   createdAt: string;
   email: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  salt?: string;
-  hash?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  password: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
+}
+export interface Survey {
+  id: string;
+  title?: string | null;
+  status?: ('started' | 'uncompleted' | 'completed') | null;
+  surveyDate?: string | null;
+  surveyQuestionSets?: (string | QuestionSet)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+export interface QuestionSet {
+  id: string;
+  active?: boolean | null;
+  title?: string | null;
+  pointValue?: number | null;
+  questions?:
+    | {
+        questionTextFields?: {
+          question?: string | null;
+          answer?:
+            | (
+                | {
+                    answerCheckboxFields?: {
+                      answerCheckboxLabel?: string | null;
+                      answerCheckboxField?: boolean | null;
+                    };
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'answerCheckboxBlock';
+                  }
+                | {
+                    answerTextFields?: {
+                      answerTextFieldLabel?: string | null;
+                      answerTextField?:
+                        | {
+                            [k: string]: unknown;
+                          }[]
+                        | null;
+                    };
+                    id?: string | null;
+                    blockName?: string | null;
+                    blockType: 'answerTextBlock';
+                  }
+              )[]
+            | null;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'questionBlock';
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 export interface User {
   id: string;
+  firstName?: string | null;
+  lastName?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
-  resetPasswordToken?: string;
-  resetPasswordExpiration?: string;
-  salt?: string;
-  hash?: string;
-  _verified?: boolean;
-  _verificationToken?: string;
-  loginAttempts?: number;
-  lockUntil?: string;
-  password: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 }
 export interface PayloadPreference {
   id: string;
@@ -54,7 +111,7 @@ export interface PayloadPreference {
         relationTo: 'users';
         value: string | User;
       };
-  key?: string;
+  key?: string | null;
   value?:
     | {
         [k: string]: unknown;
@@ -69,8 +126,8 @@ export interface PayloadPreference {
 }
 export interface PayloadMigration {
   id: string;
-  name?: string;
-  batch?: number;
+  name?: string | null;
+  batch?: number | null;
   updatedAt: string;
   createdAt: string;
 }
