@@ -1,9 +1,8 @@
 import { CollectionConfig } from 'payload/types'
 import { isAdmin } from '../../access/roles'
 import { Question } from '../../blocks/Question'
-import Surveys from '../Surveys'
 
-const QuestionSet: CollectionConfig = {
+const QuestionSets: CollectionConfig = {
   slug: 'questionSets',
   access: {
     create: isAdmin,
@@ -11,21 +10,27 @@ const QuestionSet: CollectionConfig = {
     update: isAdmin,
     delete: isAdmin,
   },
+  admin: {
+    useAsTitle: 'title',
+  },
   fields: [
+    {
+      name: 'active',
+      label: 'Active',
+      type: 'checkbox',
+      defaultValue: true,
+      index: true,
+    },
     {
       name: 'title',
       label: 'Title',
       type: 'text',
+      index: true,
     },
     {
       name: 'pointValue',
       type: 'number',
       label: 'Point Value',
-    },
-    {
-      name: 'survey',
-      type: 'relationship',
-      relationTo: Surveys.slug,
     },
     {
       name: 'questions',
@@ -36,4 +41,4 @@ const QuestionSet: CollectionConfig = {
   ],
 }
 
-export default QuestionSet
+export default QuestionSets
