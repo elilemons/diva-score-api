@@ -3,7 +3,7 @@ import { isAdmin } from '../../access/roles'
 import { Question } from '../../blocks/Question'
 
 const QuestionSets: CollectionConfig = {
-  slug: 'questionSets',
+  slug: 'question-sets',
   access: {
     create: isAdmin,
     read: () => true,
