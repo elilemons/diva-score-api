@@ -1,8 +1,8 @@
 import { UserOnRequest } from '@elilemons/diva-score-lib'
 import { Admin } from 'payload/generated-types'
-import testCredentials from '../../Admins/tests/credentials'
+import testCredentials from '../collections/Admins/tests/credentials'
 
-export const getAdminToken = async (): Promise<string> => {
+export const getAdmin = async (): Promise<UserOnRequest<Admin>> => {
   const adminLoginJSON: UserOnRequest<Admin> = await fetch(
     `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/admins/login`,
     {
@@ -17,5 +17,5 @@ export const getAdminToken = async (): Promise<string> => {
     },
   ).then((res) => res.json())
 
-  return adminLoginJSON.token
+  return adminLoginJSON
 }
