@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload/types'
 import { isAdminOrRequestingSelf } from '../../access/roles'
 import generateForgotPasswordEmail from './emails/generateForgotPasswordEmail'
 import generateVerifyEmail from './emails/generateVerifyEmail'
-import { generateForgotPasswordToken } from './endpoints/generateForgotPasswordToken'
+import generateForgotPasswordToken from './endpoints/generateForgotPasswordToken'
 
 const Users: CollectionConfig = {
   slug: 'users',
