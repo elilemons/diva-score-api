@@ -10,7 +10,7 @@ export interface Config {
   collections: {
     admins: Admin;
     surveys: Survey;
-    questionSets: QuestionSet;
+    'question-sets': QuestionSet;
     users: User;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -35,9 +35,27 @@ export interface Survey {
   title?: string | null;
   status?: ('started' | 'uncompleted' | 'completed') | null;
   surveyDate?: string | null;
+  surveyUser?: (string | null) | User;
   surveyQuestionSets?: (string | QuestionSet)[] | null;
   updatedAt: string;
   createdAt: string;
+}
+export interface User {
+  id: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  email: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  _verified?: boolean | null;
+  _verificationToken?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  password: string | null;
 }
 export interface QuestionSet {
   id: string;
@@ -82,23 +100,6 @@ export interface QuestionSet {
     | null;
   updatedAt: string;
   createdAt: string;
-}
-export interface User {
-  id: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  email: string;
-  resetPasswordToken?: string | null;
-  resetPasswordExpiration?: string | null;
-  salt?: string | null;
-  hash?: string | null;
-  _verified?: boolean | null;
-  _verificationToken?: string | null;
-  loginAttempts?: number | null;
-  lockUntil?: string | null;
-  password: string | null;
 }
 export interface PayloadPreference {
   id: string;
