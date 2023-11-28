@@ -1,7 +1,8 @@
 import { CollectionConfig } from 'payload/types'
-import { isAdmin } from '../../access/roles'
+import { isAdmin, isAdminOrRequestingSelf } from '../../access/roles'
 import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
+import Users from '../Users'
 import beforeChangeHook from './hooks/beforeChange'
 
 const Surveys: CollectionConfig = {
@@ -9,7 +10,7 @@ const Surveys: CollectionConfig = {
   access: {
     create: isAdmin,
     read: () => true,
-    update: isAdmin,
+    update: isAdminOrRequestingSelf,
     delete: isAdmin,
   },
   admin: {
@@ -37,6 +38,12 @@ const Surveys: CollectionConfig = {
           displayFormat: 'd MMM yyy',
         },
       },
+    },
+    {
+      name: 'surveyUser',
+      type: 'relationship',
+      relationTo: Users.slug,
+      required: false,
     },
     {
       name: 'surveyQuestionSets',

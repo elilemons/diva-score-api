@@ -1,12 +1,15 @@
 import Surveys from '..'
+import { getAdmin } from '../../../tests/helpers'
 import QuestionSets from '../../QuestionSets'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
-import { getAdminToken } from './helpers'
 
 describe('Surveys', () => {
+  let admin
   let adminToken
+
   beforeAll(async () => {
-    adminToken = await getAdminToken()
+    admin = await getAdmin()
+    adminToken = admin.token
 
     mockQuestionSets.map(async (questionSet) => {
       await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
