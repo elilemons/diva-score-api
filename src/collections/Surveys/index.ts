@@ -8,7 +8,7 @@ import beforeChangeHook from './hooks/beforeChange'
 const Surveys: CollectionConfig = {
   slug: 'surveys',
   access: {
-    create: isAdmin,
+    create: () => true,
     read: () => true,
     update: isAdminOrRequestingSelf,
     delete: isAdmin,
