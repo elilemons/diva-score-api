@@ -13,6 +13,7 @@ const QuestionSets: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  defaultSort: 'order',
   fields: [
     {
       name: 'active',
@@ -31,6 +32,12 @@ const QuestionSets: CollectionConfig = {
       name: 'pointValue',
       type: 'number',
       label: 'Point Value',
+    },
+    {
+      name: 'order',
+      type: 'number',
+      min: 0,
+      unique: true,
     },
     {
       name: 'questions',
