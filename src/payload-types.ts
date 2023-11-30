@@ -62,44 +62,52 @@ export interface QuestionSet {
   active?: boolean | null;
   title?: string | null;
   pointValue?: number | null;
-  questions?:
-    | {
-        questionTextFields?: {
-          question?: string | null;
-          answer?:
-            | (
-                | {
-                    answerCheckboxFields?: {
-                      answerCheckboxLabel?: string | null;
-                      answerCheckboxValue?: boolean | null;
-                    };
-                    id?: string | null;
-                    blockName?: string | null;
-                    blockType: 'answerCheckboxBlock';
-                  }
-                | {
-                    answerTextFields?: {
-                      answerTextFieldLabel?: string | null;
-                      answerTextValue?:
-                        | {
-                            [k: string]: unknown;
-                          }[]
-                        | null;
-                    };
-                    id?: string | null;
-                    blockName?: string | null;
-                    blockType: 'answerTextBlock';
-                  }
-              )[]
-            | null;
-        };
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'questionBlock';
-      }[]
-    | null;
+  order?: number | null;
+  questions?: QuestionBlock[] | null;
   updatedAt: string;
   createdAt: string;
+}
+export interface QuestionBlock {
+  questionFieldName: string;
+  questionOrder: number;
+  questionTextFields: {
+    question: string;
+    answer: (AnswerCheckboxBlock | AnswerTextBlock | AnswerRichTextBlock)[];
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'questionBlock';
+}
+export interface AnswerCheckboxBlock {
+  answerCheckboxFields?: {
+    answerCheckboxLabel?: string | null;
+    answerCheckboxValue?: boolean | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'answerCheckboxBlock';
+}
+export interface AnswerTextBlock {
+  answerTextFields?: {
+    answerTextFieldLabel?: string | null;
+    answerTextValue?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'answerTextBlock';
+}
+export interface AnswerRichTextBlock {
+  answerRichTextFields?: {
+    answerRichTextFieldLabel?: string | null;
+    answerTextValue?:
+      | {
+          [k: string]: unknown;
+        }[]
+      | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'answerRichTextBlock';
 }
 export interface PayloadPreference {
   id: string;
