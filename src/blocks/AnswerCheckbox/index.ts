@@ -15,10 +15,10 @@ export const AnswerCheckbox: Block = {
           label: 'Answer Checkbox Label',
         },
         {
-          // Checkbox shown to the User
+          // Value the user fills out
           type: 'checkbox',
-          name: 'answerCheckboxField',
-          label: 'Answer Checkbox',
+          name: 'answerCheckboxValue',
+          label: 'Answer Value',
         },
       ],
     }),

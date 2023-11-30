@@ -15,10 +15,10 @@ export const AnswerText: Block = {
           label: 'Answer Text Field Label',
         },
         {
-          // The text field shown to the user
+          // The value the user fills out
           type: 'richText',
-          name: 'answerTextField',
-          label: 'Answer Text Field',
+          name: 'answerTextValue',
+          label: 'Answer Value',
         },
       ],
     }),

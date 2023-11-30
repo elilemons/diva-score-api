@@ -28,7 +28,7 @@ export interface Admin {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password: string | null;
+  password?: string | null;
 }
 export interface Survey {
   id: string;
@@ -55,7 +55,7 @@ export interface User {
   _verificationToken?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
-  password: string | null;
+  password?: string | null;
 }
 export interface QuestionSet {
   id: string;
@@ -71,7 +71,7 @@ export interface QuestionSet {
                 | {
                     answerCheckboxFields?: {
                       answerCheckboxLabel?: string | null;
-                      answerCheckboxField?: boolean | null;
+                      answerCheckboxValue?: boolean | null;
                     };
                     id?: string | null;
                     blockName?: string | null;
@@ -80,7 +80,7 @@ export interface QuestionSet {
                 | {
                     answerTextFields?: {
                       answerTextFieldLabel?: string | null;
-                      answerTextField?:
+                      answerTextValue?:
                         | {
                             [k: string]: unknown;
                           }[]

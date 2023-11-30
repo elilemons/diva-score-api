@@ -49,9 +49,7 @@ export default buildConfig({
     declare: false, // Makes this useable in a non-payload lib
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
+  graphQL: { disable: true },
   plugins: [payloadCloud()],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
