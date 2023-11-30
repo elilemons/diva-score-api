@@ -4,21 +4,26 @@ import { blockFields } from '../../fields/blockFields'
 
 export const AnswerCheckbox: Block = {
   slug: 'answerCheckboxBlock',
+  interfaceName: 'AnswerCheckboxBlock',
   fields: [
     blockFields({
       name: 'answerCheckboxFields',
       fields: [
         {
-          // Label shown to the User
           type: 'text',
           name: 'answerCheckboxLabel',
           label: 'Answer Checkbox Label',
+          admin: {
+            description: 'This is the label that is shown to the user.',
+          },
         },
         {
-          // Value the user fills out
           type: 'checkbox',
           name: 'answerCheckboxValue',
           label: 'Answer Value',
+          admin: {
+            description: 'This is the value the user enters.',
+          },
         },
       ],
     }),
