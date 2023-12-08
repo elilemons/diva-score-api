@@ -1,5 +1,5 @@
-import payload from 'payload'
 import { CollectionBeforeChangeHook } from 'payload/types'
+import { getTodaysSurvey } from '../../../utils/getTodaysSurvey'
 import QuestionSets from '../../QuestionSets'
 
 const beforeChangeHook: CollectionBeforeChangeHook = async ({
@@ -7,10 +7,23 @@ const beforeChangeHook: CollectionBeforeChangeHook = async ({
   req, // full express request
   operation, // name of the operation ie. 'create', 'update'
 }) => {
+  const { payload, user } = req
+
+  if (!user) {
+    throw new Error('An authenticated user must be sent along with the request.')
+  }
+
+  const todaysSurvey = await getTodaysSurvey(req)
+
+  if (todaysSurvey) {
+    throw new Error('You can only create one survey per day.')
+  }
+
   if (operation === 'create') {
     try {
       const beforeChangeData = { ...data }
-      const { payload } = req
+
+      beforeChangeData.surveyUser = user.id
 
       const dateString = new Date(beforeChangeData.surveyDate).toDateString()
       beforeChangeData.title = `${beforeChangeData.title} - ${dateString}`
@@ -35,6 +48,7 @@ const beforeChangeHook: CollectionBeforeChangeHook = async ({
       throw new Error('No active question sets found.')
     } catch (error) {
       payload.logger.error(`There was an error setting up the survey: ${error}`)
+      return false
     }
   }
 
