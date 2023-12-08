@@ -3,15 +3,16 @@ import { isAdmin, isAdminOrRequestingSelf } from '../../access/roles'
 import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
 import Users from '../Users'
+import { getTodaysSurveyEndpoint } from './endpoints/getTodaysSurvey'
 import beforeChangeHook from './hooks/beforeChange'
 
 const Surveys: CollectionConfig = {
   slug: 'surveys',
   access: {
     create: () => true,
-    read: () => true,
-    update: isAdminOrRequestingSelf,
-    delete: isAdmin,
+    read: () => true, // TODO is survey user
+    update: isAdminOrRequestingSelf, // TODO is survey user
+    delete: isAdmin, // TODO is survey user
   },
   admin: {
     useAsTitle: 'title',
@@ -19,6 +20,14 @@ const Surveys: CollectionConfig = {
   hooks: {
     beforeChange: [beforeChangeHook],
   },
+  endpoints: [
+    {
+      path: '/get-todays-survey',
+      method: 'get',
+      handler: getTodaysSurveyEndpoint,
+    },
+  ],
+  defaultSort: '-surveyDate',
   fields: [
     {
       name: 'title',
@@ -38,6 +47,7 @@ const Surveys: CollectionConfig = {
           displayFormat: 'd MMM yyy',
         },
       },
+      required: true,
     },
     {
       name: 'surveyUser',
