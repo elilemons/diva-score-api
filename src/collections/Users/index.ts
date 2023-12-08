@@ -25,6 +25,13 @@ const Users: CollectionConfig = {
     update: isAdminOrRequestingSelf,
     delete: isAdminOrRequestingSelf,
   },
+  endpoints: [
+    {
+      path: '/generate-forgot-password-token',
+      method: 'get',
+      handler: generateForgotPasswordToken,
+    },
+  ],
   fields: [
     {
       name: 'firstName',
@@ -33,13 +40,6 @@ const Users: CollectionConfig = {
     {
       name: 'lastName',
       type: 'text',
-    },
-  ],
-  endpoints: [
-    {
-      path: '/generate-forgot-password-token',
-      method: 'get',
-      handler: generateForgotPasswordToken,
     },
   ],
 }
