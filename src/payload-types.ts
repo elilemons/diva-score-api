@@ -34,7 +34,7 @@ export interface Survey {
   id: string;
   title?: string | null;
   status?: ('started' | 'uncompleted' | 'completed') | null;
-  surveyDate?: string | null;
+  surveyDate: string;
   surveyUser?: (string | null) | User;
   surveyQuestionSets?: (string | QuestionSet)[] | null;
   updatedAt: string;
