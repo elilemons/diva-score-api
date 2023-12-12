@@ -1,10 +1,10 @@
 import fs from 'fs'
-import path from 'path'
 import Handlebars from 'handlebars'
 import inlineCSS from 'inline-css'
+import path from 'path'
 
 const template = fs.readFileSync
-  ? fs.readFileSync(path.join(__dirname, './template.html'), 'utf8')
+  ? fs.readFileSync(path.join(`${path.resolve()}/src/email`, './template.html'), 'utf8')
   : ''
 const getHTML = Handlebars.compile(template)
 

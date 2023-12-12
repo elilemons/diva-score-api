@@ -10,7 +10,7 @@ import Users from '..'
  * @param res
  * @returns
  */
-export const generateForgotPasswordToken = async (
+const generateForgotPasswordToken = async (
   req: PayloadRequest,
   res: Response,
   next: NextFunction,
@@ -40,3 +40,4 @@ export const generateForgotPasswordToken = async (
     }
   }
 }
+export default generateForgotPasswordToken
