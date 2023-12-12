@@ -120,4 +120,6 @@ describe('Surveys', () => {
       })
     })
   })
+
+  describe('it should test scoring a survey', () => {})
 })
