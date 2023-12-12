@@ -1,5 +1,4 @@
-import { UserOnRequest } from '@elilemons/diva-score-lib'
-import { Admin } from 'payload/generated-types'
+import { Admin, UserOnRequest } from '@elilemons/diva-score-lib'
 import testCredentials from '../collections/Admins/tests/credentials'
 import Surveys from '../collections/Surveys'
 

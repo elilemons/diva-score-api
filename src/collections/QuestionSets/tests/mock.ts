@@ -1,4 +1,4 @@
-import { QuestionSet } from 'payload/generated-types'
+import { QuestionSet } from '@elilemons/diva-score-lib'
 
 export const mockQuestionSets: Array<Partial<QuestionSet>> = [
   {
