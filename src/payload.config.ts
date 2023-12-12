@@ -8,6 +8,8 @@ import { slateEditor } from '@payloadcms/richtext-slate'
 import { buildConfig } from 'payload/config'
 
 import Admins from './collections/Admins'
+import QuestionSets from './collections/QuestionSets'
+import Surveys from './collections/Surveys'
 import Users from './collections/Users'
 
 dotenv.config({
@@ -42,14 +44,12 @@ export default buildConfig({
   },
 
   editor: slateEditor({}),
-  collections: [Admins, Users],
+  collections: [Admins, Surveys, QuestionSets, Users],
   typescript: {
     declare: false, // Makes this useable in a non-payload lib
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
-  graphQL: {
-    schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
-  },
+  graphQL: { disable: true },
   plugins: [payloadCloud()],
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
