@@ -1,5 +1,4 @@
-import { Doc, UserOnRequest } from '@elilemons/diva-score-lib'
-import { Admin, Survey } from 'payload/generated-types'
+import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
 import Surveys from '..'
 import { deleteSurvey, getAdmin } from '../../../tests/helpers'
 import QuestionSets from '../../QuestionSets'
@@ -55,7 +54,7 @@ describe('Surveys', () => {
     })
 
     it('should have set the user to the test admin user', () => {
-      expect(testSurvey.surveyUser).toBe(admin.id)
+      expect(testSurvey.doc.surveyUser).toBe(admin.user.id)
     })
 
     it('should not allow the user to create more than one survey a day', async () => {
