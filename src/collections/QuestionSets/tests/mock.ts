@@ -3,11 +3,15 @@ import { QuestionSet } from '@elilemons/diva-score-lib'
 export const mockQuestionSets: Array<Partial<QuestionSet>> = [
   {
     order: 1,
+    active: true,
+    title: 'Body',
+    pointValue: 1,
     questions: [
       {
         blockType: 'questionBlock',
         questionFieldName: 'body1',
         questionOrder: 1,
+        requiredForSetPoint: true,
         questionTextFields: {
           question: 'Did you work out today? (YES to BOTH to get +1)',
           answer: [
@@ -25,7 +29,9 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         blockType: 'questionBlock',
         questionFieldName: 'body2',
         questionOrder: 2,
+        requiredForSetPoint: true,
         questionTextFields: {
+          question: 'Did you stick to your diet today?',
           answer: [
             {
               blockType: 'answerCheckboxBlock',
@@ -35,27 +41,26 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
               },
             },
           ],
-          question: 'Did you stick to your diet today?',
         },
       },
     ],
-    active: true,
-    title: 'Body',
-    pointValue: 1,
   },
   {
     order: 2,
+    active: true,
+    title: 'Mind',
+    pointValue: 1,
     questions: [
       {
         blockType: 'questionBlock',
         questionFieldName: 'mind1',
         questionOrder: 1,
+        requiredForSetPoint: true,
         questionTextFields: {
           question: 'Did you take 5 minutes in meditation/stillness today?',
           answer: [
             {
               blockType: 'answerCheckboxBlock',
-
               answerCheckboxFields: {
                 answerCheckboxValue: null,
                 answerCheckboxLabel: 'Y/N',
@@ -65,17 +70,18 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         },
       },
     ],
-    active: true,
-    title: 'Mind',
-    pointValue: 1,
   },
   {
     order: 3,
+    active: true,
+    title: 'Spirit',
+    pointValue: 1,
     questions: [
       {
         blockType: 'questionBlock',
         questionFieldName: 'spirit1',
         questionOrder: 1,
+        requiredForSetPoint: true,
         questionTextFields: {
           answer: [
             {
@@ -90,14 +96,15 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         },
       },
     ],
-    active: true,
-    title: 'Spirit',
-    pointValue: 1,
   },
   {
     order: 4,
+    active: true,
+    title: 'Connection',
+    pointValue: 1,
     questions: [
       {
+        requiredForSetPoint: true,
         blockType: 'questionBlock',
         questionFieldName: 'connection1',
         questionOrder: 1,
@@ -115,14 +122,15 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         },
       },
     ],
-    active: true,
-    title: 'Connection',
-    pointValue: 1,
   },
   {
     order: 5,
+    active: true,
+    pointValue: 5,
+    title: 'Goals ',
     questions: [
       {
+        requiredForSetPoint: false,
         blockType: 'questionBlock',
         questionFieldName: 'goal1',
         questionOrder: 1,
@@ -143,6 +151,7 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         blockType: 'questionBlock',
         questionFieldName: 'goal2',
         questionOrder: 2,
+        requiredForSetPoint: true,
         questionTextFields: {
           question: 'Did you complete a major goal today?',
           answer: [
@@ -157,8 +166,5 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
         },
       },
     ],
-    active: true,
-    title: 'Goals ',
-    pointValue: 5,
   },
 ]
