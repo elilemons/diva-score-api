@@ -62,6 +62,7 @@ export interface QuestionSet {
   active?: boolean | null;
   title?: string | null;
   pointValue?: number | null;
+  pointsEarned?: number | null;
   order?: number | null;
   questions?: QuestionBlock[] | null;
   updatedAt: string;
@@ -70,6 +71,7 @@ export interface QuestionSet {
 export interface QuestionBlock {
   questionFieldName: string;
   questionOrder: number;
+  requiredForSetPoint?: boolean | null;
   questionTextFields: {
     question: string;
     answer: (AnswerCheckboxBlock | AnswerTextBlock | AnswerRichTextBlock)[];
@@ -99,7 +101,7 @@ export interface AnswerTextBlock {
 export interface AnswerRichTextBlock {
   answerRichTextFields?: {
     answerRichTextFieldLabel?: string | null;
-    answerTextValue?:
+    answerRichTextValue?:
       | {
           [k: string]: unknown;
         }[]
