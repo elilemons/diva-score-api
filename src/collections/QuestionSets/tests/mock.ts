@@ -127,7 +127,7 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
     order: 5,
     active: true,
     pointValue: 5,
-    title: 'Goals ',
+    title: 'Goals',
     questions: [
       {
         requiredForSetPoint: false,
@@ -138,10 +138,10 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
           question: 'What is one goal you have set for yourself in writing?',
           answer: [
             {
-              blockType: 'answerTextBlock',
-              answerTextFields: {
-                answerTextFieldLabel: '',
-                answerTextValue: null,
+              blockType: 'answerRichTextBlock',
+              answerRichTextFields: {
+                answerRichTextFieldLabel: '',
+                answerRichTextValue: null,
               },
             },
           ],
