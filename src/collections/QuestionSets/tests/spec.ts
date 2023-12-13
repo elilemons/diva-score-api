@@ -1,8 +1,9 @@
-import { AnswerCheckboxBlock, UserOnRequest } from '@elilemons/diva-score-lib'
-import { Admin, AnswerTextBlock } from 'payload/generated-types'
+import { QuestionSet, UserOnRequest } from '@elilemons/diva-score-lib'
+import { Admin } from 'payload/generated-types'
 import QuestionSets from '..'
 // import QuestionSets from '..'
 import { getAdmin } from '../../../tests/helpers'
+import { answerQuestion } from '../../../utils/answerQuestion'
 import { mockQuestionSets } from './mock'
 
 describe('Question Sets', () => {
@@ -23,16 +24,15 @@ describe('Question Sets', () => {
     it('should score 1', async () => {
       const mockQuestionSet = { ...mockQuestionSets[0] }
 
-      const answerOne = mockQuestionSet.questions[0].questionTextFields
-        .answer[0] as AnswerCheckboxBlock
-      answerOne.answerCheckboxFields.answerCheckboxValue = true
+      mockQuestionSet.questions[0] = answerQuestion({
+        question: mockQuestionSet.questions[0],
+        answerValue: true,
+      })
 
-      const answerTwo = mockQuestionSet.questions[1].questionTextFields
-        .answer[0] as AnswerCheckboxBlock
-      answerTwo.answerCheckboxFields.answerCheckboxValue = true
-
-      mockQuestionSet.questions[0].questionTextFields.answer[0] = answerOne
-      mockQuestionSet.questions[1].questionTextFields.answer[0] = answerTwo
+      mockQuestionSet.questions[1] = answerQuestion({
+        question: mockQuestionSet.questions[1],
+        answerValue: true,
+      })
 
       const score = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}/score-question-set`,
@@ -51,16 +51,15 @@ describe('Question Sets', () => {
     it('should score 0', async () => {
       const mockQuestionSet = { ...mockQuestionSets[0] }
 
-      const answerOne = mockQuestionSet.questions[0].questionTextFields
-        .answer[0] as AnswerCheckboxBlock
-      answerOne.answerCheckboxFields.answerCheckboxValue = true
+      mockQuestionSet.questions[0] = answerQuestion({
+        question: mockQuestionSet.questions[0],
+        answerValue: true,
+      })
 
-      const answerTwo = mockQuestionSet.questions[1].questionTextFields
-        .answer[0] as AnswerCheckboxBlock
-      answerTwo.answerCheckboxFields.answerCheckboxValue = false
-
-      mockQuestionSet.questions[0].questionTextFields.answer[0] = answerOne
-      mockQuestionSet.questions[1].questionTextFields.answer[0] = answerTwo
+      mockQuestionSet.questions[1] = answerQuestion({
+        question: mockQuestionSet.questions[1],
+        answerValue: false,
+      })
 
       const score = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/question-sets/score-question-set`,
@@ -79,14 +78,14 @@ describe('Question Sets', () => {
     it('should score 5 even if one field is blank', async () => {
       // This question has an optional text field and checkbox
       // The checkbox question is required for the set point
-      const mockQuestionSet = { ...mockQuestionSets[4] }
+      const mockQuestionSet = {
+        ...mockQuestionSets.find((qs: QuestionSet) => qs.title === 'Goals'),
+      }
 
-      const answerOne = mockQuestionSet.questions[0].questionTextFields.answer[0] as AnswerTextBlock
-      answerOne.answerTextFields.answerTextValue = ''
-
-      const answerTwo = mockQuestionSet.questions[1].questionTextFields
-        .answer[0] as AnswerCheckboxBlock
-      answerTwo.answerCheckboxFields.answerCheckboxValue = true
+      mockQuestionSet.questions[1] = answerQuestion({
+        question: mockQuestionSet.questions[1],
+        answerValue: true,
+      })
 
       const score = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/question-sets/score-question-set`,
