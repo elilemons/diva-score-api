@@ -1,7 +1,6 @@
 import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
 import Surveys from '..'
-import { deleteSurvey, getAdmin } from '../../../tests/helpers'
-import QuestionSets from '../../QuestionSets'
+import { createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
 
 describe('Surveys', () => {
@@ -21,21 +20,7 @@ describe('Surveys', () => {
 
   describe('it should test creating a survey', () => {
     beforeAll(async () => {
-      mockQuestionSets.map(async (questionSet) => {
-        await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
-          method: 'post',
-          headers,
-          body: JSON.stringify(questionSet),
-        })
-      })
-
-      testSurvey = await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`, {
-        method: 'post',
-        headers,
-        body: JSON.stringify({
-          title: 'Test Survey',
-        }),
-      }).then((res) => res.json())
+      testSurvey = await createSurvey({ headers })
     })
 
     afterAll(async () => {
@@ -121,5 +106,64 @@ describe('Surveys', () => {
     })
   })
 
-  describe('it should test scoring a survey', () => {})
+  // describe('it should test scoring a survey', () => {
+  //   let surveyToScore: Survey
+
+  //   beforeAll(async () => {
+  //     surveyToScore = await createSurvey({ headers }).then((res) => res.doc)
+  //   })
+
+  //   afterAll(() => {
+  //     deleteSurvey({ surveyId: surveyToScore.id, headers })
+  //   })
+
+  //   it('should get the best score possible', async () => {
+  //     const answeredSurvey = { ...surveyToScore }
+
+  //     const result = await fetch(
+  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+  //       {
+  //         method: 'post',
+  //         headers,
+  //         body: JSON.stringify({
+  //           answeredSurvey,
+  //         }),
+  //       },
+  //     )
+
+  //     expect(result).toBe({ score: 9 })
+  //   })
+
+  //   it('should not get any points', async () => {
+  //     const answeredSurvey = { ...surveyToScore }
+  //     const result = await fetch(
+  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+  //       {
+  //         method: 'post',
+  //         headers,
+  //         body: JSON.stringify({
+  //           answeredSurvey,
+  //         }),
+  //       },
+  //     )
+
+  //     expect(result).toBe({ score: 0 })
+  //   })
+
+  //   it('should get 6 points', async () => {
+  //     const answeredSurvey = { ...surveyToScore } // TODO complete goals and mind
+  //     const result = await fetch(
+  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+  //       {
+  //         method: 'post',
+  //         headers,
+  //         body: JSON.stringify({
+  //           answeredSurvey,
+  //         }),
+  //       },
+  //     )
+
+  //     expect(result).toBe({ score: 0 })
+  //   })
+  // })
 })
