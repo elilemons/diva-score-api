@@ -4,6 +4,7 @@ import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
 import Users from '../Users'
 import { getTodaysSurveyEndpoint } from './endpoints/getTodaysSurvey'
+import { scoreSurveyEndpoint } from './endpoints/scoreSurvey'
 import beforeChangeHook from './hooks/beforeChange'
 
 const Surveys: CollectionConfig = {
@@ -25,6 +26,11 @@ const Surveys: CollectionConfig = {
       path: '/get-todays-survey',
       method: 'get',
       handler: getTodaysSurveyEndpoint,
+    },
+    {
+      path: '/score-survey',
+      method: 'post',
+      handler: scoreSurveyEndpoint,
     },
   ],
   defaultSort: '-surveyDate',
