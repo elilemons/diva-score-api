@@ -1,5 +1,6 @@
 import { Admin, Doc, UserOnRequest } from '@elilemons/diva-score-lib'
 import { Survey } from 'payload/generated-types'
+import qs from 'qs'
 import testCredentials from '../collections/Admins/tests/credentials'
 import QuestionSets from '../collections/QuestionSets'
 import { mockQuestionSets } from '../collections/QuestionSets/tests/mock'
@@ -23,18 +24,51 @@ export const getAdmin = async (): Promise<UserOnRequest<Admin>> => {
   return adminLoginJSON
 }
 
+export const checkForQuestionSets = async (headers: Headers): Promise<boolean> => {
+  const qs = await fetch(
+    `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}?limit=1`,
+    {
+      method: 'get',
+      headers,
+    },
+  )
+
+  return !!qs
+}
+
+export const createQuestionSets = async (headers: Headers): Promise<void> => {
+  mockQuestionSets.forEach(
+    async (questionSet) =>
+      await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
+        method: 'post',
+        headers,
+        body: JSON.stringify(questionSet),
+      }).then((res) => res.json()),
+  )
+}
+
+export const deleteQuestionSets = async (headers: Headers): Promise<void> => {
+  const query = qs.stringify(
+    {
+      where: {
+        active: {
+          equals: true,
+        },
+      },
+    },
+    { addQueryPrefix: true },
+  )
+
+  await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}/${query}`, {
+    method: 'delete',
+    headers,
+  })
+}
+
 type CreateSurveyProps = {
   headers: Headers
 }
 export const createSurvey = async ({ headers }: CreateSurveyProps): Promise<Doc<Survey>> => {
-  mockQuestionSets.map(async (questionSet) => {
-    await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
-      method: 'post',
-      headers,
-      body: JSON.stringify(questionSet),
-    })
-  })
-
   return await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`, {
     method: 'post',
     headers,
