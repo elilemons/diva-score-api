@@ -1,6 +1,14 @@
-import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
+import {
+  Admin,
+  Doc,
+  QuestionBlock,
+  QuestionSet,
+  Survey,
+  UserOnRequest,
+} from '@elilemons/diva-score-lib'
 import Surveys from '..'
-import { createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
+import { createQuestionSets, createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
+import { answerQuestion } from '../../../utils/answerQuestion'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
 
 describe('Surveys', () => {
@@ -16,6 +24,8 @@ describe('Surveys', () => {
       'Content-Type': 'application/json',
       Authorization: `JWT ${adminToken}`,
     })
+
+    createQuestionSets(headers)
   })
 
   describe('it should test creating a survey', () => {
@@ -106,64 +116,111 @@ describe('Surveys', () => {
     })
   })
 
-  // describe('it should test scoring a survey', () => {
-  //   let surveyToScore: Survey
+  describe('it should test scoring a survey', () => {
+    let surveyToScore: Survey
 
-  //   beforeAll(async () => {
-  //     surveyToScore = await createSurvey({ headers }).then((res) => res.doc)
-  //   })
+    beforeAll(async () => {
+      surveyToScore = await createSurvey({ headers }).then((res) => res.doc)
+    })
 
-  //   afterAll(() => {
-  //     deleteSurvey({ surveyId: surveyToScore.id, headers })
-  //   })
+    afterAll(() => {
+      deleteSurvey({ surveyId: surveyToScore.id, headers })
+    })
 
-  //   it('should get the best score possible', async () => {
-  //     const answeredSurvey = { ...surveyToScore }
+    it('should get the best score possible', async () => {
+      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
 
-  //     const result = await fetch(
-  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-  //       {
-  //         method: 'post',
-  //         headers,
-  //         body: JSON.stringify({
-  //           answeredSurvey,
-  //         }),
-  //       },
-  //     )
+      answeredSurvey.surveyQuestionSets.map((qs: QuestionSet) => {
+        qs.questions.map((q: QuestionBlock) => {
+          switch (q.questionTextFields.answer[0].blockType) {
+            case 'answerCheckboxBlock':
+              return answerQuestion({
+                question: q,
+                answerValue: true,
+              })
+            case 'answerTextBlock' || 'answerRichTextBlock':
+              return answerQuestion({
+                question: q,
+                answerValue: 'true',
+              })
+            default:
+              break
+          }
+        })
+      })
 
-  //     expect(result).toBe({ score: 9 })
-  //   })
+      const result = await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+        {
+          method: 'post',
+          headers,
+          body: JSON.stringify({
+            survey: answeredSurvey,
+          }),
+        },
+      ).then((res) => res.json())
 
-  //   it('should not get any points', async () => {
-  //     const answeredSurvey = { ...surveyToScore }
-  //     const result = await fetch(
-  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-  //       {
-  //         method: 'post',
-  //         headers,
-  //         body: JSON.stringify({
-  //           answeredSurvey,
-  //         }),
-  //       },
-  //     )
+      expect(result).toEqual({ score: 9 })
+    })
 
-  //     expect(result).toBe({ score: 0 })
-  //   })
+    it('should get 6 points', async () => {
+      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
 
-  //   it('should get 6 points', async () => {
-  //     const answeredSurvey = { ...surveyToScore } // TODO complete goals and mind
-  //     const result = await fetch(
-  //       `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-  //       {
-  //         method: 'post',
-  //         headers,
-  //         body: JSON.stringify({
-  //           answeredSurvey,
-  //         }),
-  //       },
-  //     )
+      const mindQuestionSet = answeredSurvey.surveyQuestionSets.find(
+        (qs: QuestionSet) => qs.title === 'Mind',
+      ) as QuestionSet
+      mindQuestionSet.questions[0] = answerQuestion({
+        question: mindQuestionSet.questions[0],
+        answerValue: true,
+      })
 
-  //     expect(result).toBe({ score: 0 })
-  //   })
-  // })
+      const goalQuestionSet = answeredSurvey.surveyQuestionSets.find(
+        (qs: QuestionSet) => qs.title === 'Goals',
+      ) as QuestionSet
+      goalQuestionSet.questions[1] = answerQuestion({
+        question: goalQuestionSet.questions[1],
+        answerValue: true,
+      })
+
+      const mindIndex = answeredSurvey.surveyQuestionSets.findIndex(
+        (qs: QuestionSet) => qs.title === 'Mind',
+      )
+      answeredSurvey[mindIndex] = mindQuestionSet
+
+      const goalIndex = answeredSurvey.surveyQuestionSets.findIndex(
+        (qs: QuestionSet) => qs.title === 'Goals',
+      )
+      answeredSurvey[goalIndex] = goalQuestionSet
+
+      const result = await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+        {
+          method: 'post',
+          headers,
+          body: JSON.stringify({
+            survey: answeredSurvey,
+          }),
+        },
+      ).then((res) => res.json())
+
+      expect(result).toEqual({ score: 6 })
+    })
+
+    it('should not get any points', async () => {
+      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
+
+      const result = await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
+        {
+          method: 'post',
+          headers,
+          body: JSON.stringify({
+            survey: answeredSurvey,
+          }),
+        },
+      ).then((res) => res.json())
+
+      expect(result).toEqual({ score: 0 })
+    })
+  })
 })
