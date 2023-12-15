@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types'
-import { isAdmin, isAdminOrRequestingSelf } from '../../access/roles'
+import { isAdminOrUsersSurvey } from '../../access/roles'
 import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
 import Users from '../Users'
@@ -11,9 +11,9 @@ const Surveys: CollectionConfig = {
   slug: 'surveys',
   access: {
     create: () => true,
-    read: () => true, // TODO is survey user
-    update: isAdminOrRequestingSelf, // TODO is survey user
-    delete: isAdmin, // TODO is survey user
+    read: isAdminOrUsersSurvey,
+    update: isAdminOrUsersSurvey,
+    delete: isAdminOrUsersSurvey,
   },
   admin: {
     useAsTitle: 'title',

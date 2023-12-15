@@ -1,6 +1,6 @@
 import { AuthCollectionSlugs } from '@elilemons/diva-score-lib'
 import { PayloadRequest } from 'payload/dist/express/types'
-import { FieldAccess } from 'payload/types'
+import { Access, FieldAccess } from 'payload/types'
 
 export const checkCollection = (
   collectionsSlugs: Array<AuthCollectionSlugs> | AuthCollectionSlugs,
@@ -38,4 +38,15 @@ export const isAdminOrRequestingSelf: FieldAccess = ({ req, id }) => {
     }
   }
   return false
+}
+
+export const isAdminOrUsersSurvey: Access = ({ req, id }) => {
+  if (req?.user?.id) {
+    if (checkCollection('admins', req)) {
+      return true
+    }
+    return {
+      surveyUser: { equals: req.user.id },
+    }
+  }
 }
