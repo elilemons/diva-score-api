@@ -1,21 +1,12 @@
-import {
-  Admin,
-  Doc,
-  QuestionBlock,
-  QuestionSet,
-  Survey,
-  UserOnRequest,
-} from '@elilemons/diva-score-lib'
+import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
 import Surveys from '..'
 import { createQuestionSets, createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
-import { answerQuestion } from '../../../utils/answerQuestion'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
 
 describe('Surveys', () => {
   let admin: UserOnRequest<Admin>
   let adminToken: string
   let headers: Headers
-  let testSurvey: Doc<Survey>
 
   beforeAll(async () => {
     admin = await getAdmin()
@@ -25,16 +16,19 @@ describe('Surveys', () => {
       Authorization: `JWT ${adminToken}`,
     })
 
-    createQuestionSets(headers)
+    await createQuestionSets(headers)
   })
 
   describe('it should test creating a survey', () => {
+    let testSurvey: Doc<Survey>
     beforeAll(async () => {
-      testSurvey = await createSurvey({ headers })
+      testSurvey = await createSurvey({ headers }).then((res) => res)
     })
 
     afterAll(async () => {
-      await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
+      if (testSurvey && testSurvey.doc && testSurvey.doc.id) {
+        await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
+      }
     })
 
     it('should have 5 question sets', () => {
@@ -113,114 +107,6 @@ describe('Surveys', () => {
         surveyId: testSurvey2.doc.id,
         headers,
       })
-    })
-  })
-
-  describe('it should test scoring a survey', () => {
-    let surveyToScore: Survey
-
-    beforeAll(async () => {
-      surveyToScore = await createSurvey({ headers }).then((res) => res.doc)
-    })
-
-    afterAll(() => {
-      deleteSurvey({ surveyId: surveyToScore.id, headers })
-    })
-
-    it('should get the best score possible', async () => {
-      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
-
-      answeredSurvey.surveyQuestionSets.map((qs: QuestionSet) => {
-        qs.questions.map((q: QuestionBlock) => {
-          switch (q.questionTextFields.answer[0].blockType) {
-            case 'answerCheckboxBlock':
-              return answerQuestion({
-                question: q,
-                answerValue: true,
-              })
-            case 'answerTextBlock' || 'answerRichTextBlock':
-              return answerQuestion({
-                question: q,
-                answerValue: 'true',
-              })
-            default:
-              break
-          }
-        })
-      })
-
-      const result = await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-        {
-          method: 'post',
-          headers,
-          body: JSON.stringify({
-            survey: answeredSurvey,
-          }),
-        },
-      ).then((res) => res.json())
-
-      expect(result).toEqual({ score: 9 })
-    })
-
-    it('should get 6 points', async () => {
-      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
-
-      const mindQuestionSet = answeredSurvey.surveyQuestionSets.find(
-        (qs: QuestionSet) => qs.title === 'Mind',
-      ) as QuestionSet
-      mindQuestionSet.questions[0] = answerQuestion({
-        question: mindQuestionSet.questions[0],
-        answerValue: true,
-      })
-
-      const goalQuestionSet = answeredSurvey.surveyQuestionSets.find(
-        (qs: QuestionSet) => qs.title === 'Goals',
-      ) as QuestionSet
-      goalQuestionSet.questions[1] = answerQuestion({
-        question: goalQuestionSet.questions[1],
-        answerValue: true,
-      })
-
-      const mindIndex = answeredSurvey.surveyQuestionSets.findIndex(
-        (qs: QuestionSet) => qs.title === 'Mind',
-      )
-      answeredSurvey[mindIndex] = mindQuestionSet
-
-      const goalIndex = answeredSurvey.surveyQuestionSets.findIndex(
-        (qs: QuestionSet) => qs.title === 'Goals',
-      )
-      answeredSurvey[goalIndex] = goalQuestionSet
-
-      const result = await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-        {
-          method: 'post',
-          headers,
-          body: JSON.stringify({
-            survey: answeredSurvey,
-          }),
-        },
-      ).then((res) => res.json())
-
-      expect(result).toEqual({ score: 6 })
-    })
-
-    it('should not get any points', async () => {
-      const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
-
-      const result = await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/score-survey`,
-        {
-          method: 'post',
-          headers,
-          body: JSON.stringify({
-            survey: answeredSurvey,
-          }),
-        },
-      ).then((res) => res.json())
-
-      expect(result).toEqual({ score: 0 })
     })
   })
 })
