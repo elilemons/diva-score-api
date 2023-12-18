@@ -31,20 +31,23 @@ export const checkForQuestionSets = async (headers: Headers): Promise<boolean> =
       method: 'get',
       headers,
     },
-  )
-
-  return !!qs
+  ).then((res) => res.json())
+  return Promise.resolve(qs.totalDocs > 0)
 }
 
 export const createQuestionSets = async (headers: Headers): Promise<void> => {
-  mockQuestionSets.forEach(
-    async (questionSet) =>
-      await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
-        method: 'post',
-        headers,
-        body: JSON.stringify(questionSet),
-      }).then((res) => res.json()),
-  )
+  if (await checkForQuestionSets(headers)) {
+    return
+  } else {
+    mockQuestionSets.forEach(
+      async (questionSet) =>
+        await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
+          method: 'post',
+          headers,
+          body: JSON.stringify(questionSet),
+        }),
+    )
+  }
 }
 
 export const deleteQuestionSets = async (headers: Headers): Promise<void> => {
