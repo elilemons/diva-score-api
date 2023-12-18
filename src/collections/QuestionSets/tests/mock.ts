@@ -132,7 +132,7 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
       {
         requiredForSetPoint: false,
         blockType: 'questionBlock',
-        questionFieldName: 'goal1',
+        questionFieldName: 'goals1',
         questionOrder: 1,
         questionTextFields: {
           question: 'What is one goal you have set for yourself in writing?',
@@ -149,7 +149,7 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
       },
       {
         blockType: 'questionBlock',
-        questionFieldName: 'goal2',
+        questionFieldName: 'goals2',
         questionOrder: 2,
         requiredForSetPoint: true,
         questionTextFields: {
