@@ -66,6 +66,7 @@ const Surveys: CollectionConfig = {
       relationTo: QuestionSets.slug,
       hasMany: true,
       label: 'Survey Question Sets',
+      validate: () => true, // allows me to send objects instead of arrays of ids
     },
   ],
 }
