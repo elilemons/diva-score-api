@@ -1,6 +1,7 @@
-import { QuestionBlock, QuestionSet, Survey } from '@elilemons/diva-score-lib'
+import { Survey } from '@elilemons/diva-score-lib'
 import { CollectionBeforeChangeHook } from 'payload/types'
-import { answerQuestion } from '../../../utils/answerQuestion'
+import Surveys from '..'
+import { answerSurvey } from '../../../utils/answerSurvey'
 import { getTodaysSurvey } from '../../../utils/getTodaysSurvey'
 import { scoreSurvey } from '../../../utils/scoreSurvey'
 import QuestionSets from '../../QuestionSets'
@@ -9,6 +10,7 @@ const beforeChangeHook: CollectionBeforeChangeHook = async ({
   data, // incoming data to update or create with
   req, // full express request
   operation, // name of the operation ie. 'create', 'update'
+  originalDoc,
 }) => {
   const { payload, user } = req
   const beforeChangeData = { ...data }
@@ -55,38 +57,23 @@ const beforeChangeHook: CollectionBeforeChangeHook = async ({
   }
 
   if (operation === 'update') {
-    // beforeChangeData will look like { body1: true, body2: true }
-    // TODO Remove this test code
-    console.log('ELITEST update survey called', { beforeChangeData })
-    // ^ TODO Remove this test code
     try {
-      beforeChangeData.surveyQuestionSets.map((qs: QuestionSet) => {
-        qs.questions.map((q: QuestionBlock) => {
-          switch (q.questionTextFields.answer[0].blockType) {
-            case 'answerCheckboxBlock':
-              return answerQuestion({
-                question: q,
-                answerValue: true,
-              })
-            case 'answerTextBlock' || 'answerRichTextBlock':
-              return answerQuestion({
-                question: q,
-                answerValue: 'true',
-              })
-            default:
-              break
-          }
-        })
+      const currentSurvey = (await payload.findByID({
+        collection: Surveys.slug,
+        id: originalDoc.id,
+        depth: 4,
+      })) as Partial<Survey>
+
+      const answeredSurvey = await answerSurvey({
+        survey: currentSurvey,
+        answers: beforeChangeData,
       })
 
-      const score = await scoreSurvey(beforeChangeData as Survey).then((score) => score)
-      // TODO Remove this test code
-      console.log('ELITEST score', { score })
-      // ^ TODO Remove this test code
+      const score = await scoreSurvey(answeredSurvey as Survey).then((res) => res.score)
+      answeredSurvey.pointsEarned = score
+      answeredSurvey.surveyUser = user.id
 
-      beforeChangeData.pointsEarned = score
-
-      return beforeChangeData
+      return answeredSurvey
     } catch (error) {
       payload.logger.error(`There was an error updating the survey: ${error}`)
       return false
