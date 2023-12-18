@@ -32,7 +32,7 @@ describe('Extract Block Type Name', () => {
   it('should find richText', () => {
     const question = mockQuestionSets
       .find((qs: QuestionSet) => qs.title === 'Goals')
-      .questions.find((q: QuestionBlock) => q.questionFieldName === 'goal1')
+      .questions.find((q: QuestionBlock) => q.questionFieldName === 'goals1')
 
     const result = extractBlockTypeName({
       blockName: 'answer',
