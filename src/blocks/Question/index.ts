@@ -25,6 +25,11 @@ export const Question: Block = {
       required: true,
       min: 0,
     },
+    {
+      name: 'requiredForSetPoint',
+      type: 'checkbox',
+      label: 'Is a truthy answer required for the user to earn a point on the entire question set?',
+    },
     blockFields({
       name: 'questionTextFields',
       fields: [

@@ -1,6 +1,7 @@
 import { CollectionConfig } from 'payload/types'
 import { isAdmin } from '../../access/roles'
 import { Question } from '../../blocks/Question'
+import { scoreQuestionSetEndpoint } from './endpoints/scoreQuestionSet'
 
 const QuestionSets: CollectionConfig = {
   slug: 'question-sets',
@@ -14,6 +15,13 @@ const QuestionSets: CollectionConfig = {
     useAsTitle: 'title',
   },
   defaultSort: 'order',
+  endpoints: [
+    {
+      path: '/score-question-set',
+      handler: scoreQuestionSetEndpoint,
+      method: 'post',
+    },
+  ],
   fields: [
     {
       name: 'active',
@@ -32,6 +40,11 @@ const QuestionSets: CollectionConfig = {
       name: 'pointValue',
       type: 'number',
       label: 'Point Value',
+    },
+    {
+      name: 'pointsEarned',
+      type: 'number',
+      label: 'Point Earned',
     },
     {
       name: 'order',

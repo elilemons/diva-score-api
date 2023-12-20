@@ -1,5 +1,5 @@
 import { CollectionConfig } from 'payload/types'
-import { isAdmin, isAdminOrRequestingSelf } from '../../access/roles'
+import { isAdminOrUsersSurvey } from '../../access/roles'
 import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
 import Users from '../Users'
@@ -10,9 +10,9 @@ const Surveys: CollectionConfig = {
   slug: 'surveys',
   access: {
     create: () => true,
-    read: () => true, // TODO is survey user
-    update: isAdminOrRequestingSelf, // TODO is survey user
-    delete: isAdmin, // TODO is survey user
+    read: isAdminOrUsersSurvey,
+    update: isAdminOrUsersSurvey,
+    delete: isAdminOrUsersSurvey,
   },
   admin: {
     useAsTitle: 'title',
@@ -38,6 +38,11 @@ const Surveys: CollectionConfig = {
       ...statusField,
     },
     {
+      name: 'pointsEarned',
+      type: 'number',
+      defaultValue: 0,
+    },
+    {
       name: 'surveyDate',
       type: 'date',
       defaultValue: new Date().toString(),
@@ -61,6 +66,7 @@ const Surveys: CollectionConfig = {
       relationTo: QuestionSets.slug,
       hasMany: true,
       label: 'Survey Question Sets',
+      validate: () => true, // allows me to send objects instead of arrays of ids
     },
   ],
 }

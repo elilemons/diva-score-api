@@ -19,7 +19,7 @@ export const AnswerRichText: Block = {
         },
         {
           type: 'richText',
-          name: 'answerTextValue',
+          name: 'answerRichTextValue',
           label: 'Answer Value',
           admin: {
             description: 'This is the value the user enters.',

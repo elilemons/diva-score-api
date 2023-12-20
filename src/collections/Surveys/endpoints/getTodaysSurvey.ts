@@ -2,6 +2,7 @@ import { NextFunction, Response } from 'express'
 import { PayloadRequest } from 'payload/types'
 import { getTodaysSurvey } from '../../../utils/getTodaysSurvey'
 
+// Tests for this are in the Survey collection tests
 export const getTodaysSurveyEndpoint = async (
   req: PayloadRequest,
   res?: Response,
