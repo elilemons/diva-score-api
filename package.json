@@ -20,7 +20,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
-    "@elilemons/diva-score-lib": "0.1.1",
+    "@elilemons/diva-score-lib": "0.1.2",
     "@payloadcms/bundler-webpack": "^1.0.0",
     "@payloadcms/db-mongodb": "^1.0.0",
     "@payloadcms/plugin-cloud": "^2.0.0",
