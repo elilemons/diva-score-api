@@ -1,14 +1,12 @@
 import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
 import Surveys from '..'
-import { deleteSurvey, getAdmin } from '../../../tests/helpers'
-import QuestionSets from '../../QuestionSets'
+import { createQuestionSets, createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
 
 describe('Surveys', () => {
   let admin: UserOnRequest<Admin>
   let adminToken: string
   let headers: Headers
-  let testSurvey: Doc<Survey>
 
   beforeAll(async () => {
     admin = await getAdmin()
@@ -17,29 +15,20 @@ describe('Surveys', () => {
       'Content-Type': 'application/json',
       Authorization: `JWT ${adminToken}`,
     })
+
+    await createQuestionSets(headers)
   })
 
   describe('it should test creating a survey', () => {
+    let testSurvey: Doc<Survey>
     beforeAll(async () => {
-      mockQuestionSets.map(async (questionSet) => {
-        await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${QuestionSets.slug}`, {
-          method: 'post',
-          headers,
-          body: JSON.stringify(questionSet),
-        })
-      })
-
-      testSurvey = await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`, {
-        method: 'post',
-        headers,
-        body: JSON.stringify({
-          title: 'Test Survey',
-        }),
-      }).then((res) => res.json())
+      testSurvey = await createSurvey({ headers }).then((res) => res)
     })
 
     afterAll(async () => {
-      await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
+      if (testSurvey && testSurvey.doc && testSurvey.doc.id) {
+        await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
+      }
     })
 
     it('should have 5 question sets', () => {

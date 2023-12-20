@@ -20,7 +20,7 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
-    "@elilemons/diva-score-lib": "0.1.1",
+    "@elilemons/diva-score-lib": "0.1.2",
     "@payloadcms/bundler-webpack": "^1.0.0",
     "@payloadcms/db-mongodb": "^1.0.0",
     "@payloadcms/plugin-cloud": "^2.0.0",
@@ -30,7 +30,8 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.8",
     "inline-css": "^4.0.2",
-    "payload": "2.0.14"
+    "payload": "2.0.14",
+    "qs": "^6.11.2"
   },
   "devDependencies": {
     "@payloadcms/eslint-config": "^1.0.0",
