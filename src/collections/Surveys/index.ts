@@ -3,6 +3,7 @@ import { isAdminOrUsersSurvey } from '../../access/roles'
 import { statusField } from '../../fields/status'
 import QuestionSets from '../QuestionSets'
 import Users from '../Users'
+import { getUsersSurveysEndpoint } from './endpoints/getUsersSurveys'
 import { getTodaysSurveyEndpoint } from './endpoints/getTodaysSurvey'
 import beforeChangeHook from './hooks/beforeChange'
 
@@ -21,6 +22,11 @@ const Surveys: CollectionConfig = {
     beforeChange: [beforeChangeHook],
   },
   endpoints: [
+    {
+      path: '/get-users-surveys',
+      method: 'get',
+      handler: getUsersSurveysEndpoint,
+    },
     {
       path: '/get-todays-survey',
       method: 'get',
@@ -59,6 +65,7 @@ const Surveys: CollectionConfig = {
       type: 'relationship',
       relationTo: Users.slug,
       required: false,
+      index: true, // If removed, manually delete from mongodb cache
     },
     {
       name: 'surveyQuestionSets',
