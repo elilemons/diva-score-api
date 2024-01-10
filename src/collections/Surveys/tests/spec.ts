@@ -1,4 +1,4 @@
-import { Admin, Doc, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
+import { Admin, Doc, Docs, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
 import Surveys from '..'
 import { createQuestionSets, createSurvey, deleteSurvey, getAdmin } from '../../../tests/helpers'
 import { mockQuestionSets } from '../../QuestionSets/tests/mock'
@@ -106,6 +106,88 @@ describe('Surveys', () => {
       await deleteSurvey({
         surveyId: testSurvey2.doc.id,
         headers,
+      })
+    })
+  })
+
+  describe('should test getting a users surveys', () => {
+    it('should not find any surveys', async () => {
+      await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
+        {
+          method: 'get',
+          headers,
+        },
+      ).then(async (res) => {
+        expect(res.status).toBe(200)
+
+        const surveys = await res.json()
+        expect(surveys.totalDocs).toBe(0)
+      })
+    })
+
+    it('should find a survey', async () => {
+      const testSurvey: Doc<Survey> = await createSurvey({ headers }).then((res) => res)
+
+      await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
+        {
+          method: 'get',
+          headers,
+        },
+      ).then(async (res) => {
+        expect(res.status).toBe(200)
+
+        const surveys = await res.json()
+        expect(surveys.totalDocs).toBe(1)
+        expect(surveys.docs[0].id).toBe(testSurvey.doc.id)
+      })
+
+      await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
+    })
+  })
+
+  describe('it should find multiple user surveys', () => {
+    let survey1: Doc<Survey>
+    let survey2: Doc<Survey>
+    let survey3: Doc<Survey>
+
+    beforeAll(async () => {
+      survey1 = await createSurvey({
+        headers,
+      }).then((res) => res)
+      survey2 = await createSurvey({
+        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
+        headers,
+      }).then((res) => res)
+      survey3 = await createSurvey({
+        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
+        headers,
+      }).then((res) => res)
+    })
+
+    afterAll(async () => {
+      await deleteSurvey({ surveyId: survey1.doc.id, headers })
+      await deleteSurvey({ surveyId: survey2.doc.id, headers })
+      await deleteSurvey({ surveyId: survey3.doc.id, headers })
+    })
+
+    it('should find multiple surveys', async () => {
+      await fetch(
+        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
+        {
+          method: 'get',
+          headers,
+        },
+      ).then(async (res) => {
+        expect(res.status).toBe(200)
+
+        const surveys = await res.json()
+
+        expect(surveys.totalDocs).toBe(3)
+        expect(surveys.docs[0].id).toBe(survey1.doc.id)
+        expect(surveys.docs[1].id).toBe(survey2.doc.id)
+        expect(surveys.docs[2].id).toBe(survey3.doc.id)
       })
     })
   })
