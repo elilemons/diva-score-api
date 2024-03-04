@@ -18,6 +18,7 @@ export const getUsersTotalScoreEndpoint = async (
       const surveys = (await payload
         .find({
           collection: Surveys.slug,
+          limit: Number.MAX_SAFE_INTEGER,
           where: {
             surveyUser: { equals: user.id },
           },
