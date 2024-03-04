@@ -21,17 +21,9 @@ const beforeChangeHook: CollectionBeforeChangeHook = async ({
 
   if (operation === 'create') {
     const todaysSurvey = await getTodaysSurvey(req)
-    if (todaysSurvey) {
-      const todaysSurveyDate =
-        typeof todaysSurvey.surveyDate === 'string'
-          ? new Date(todaysSurvey.surveyDate).setHours(0, 0, 0, 0)
-          : null
-      const currentSurveyDate =
-        typeof data.surveyDate === 'string' ? new Date(data.surveyDate).setHours(0, 0, 0, 0) : null
 
-      if (todaysSurveyDate === currentSurveyDate) {
-        throw new Error('You can only create one survey per day.')
-      }
+    if (todaysSurvey) {
+      throw new Error('You can only create one survey per day.')
     }
 
     try {

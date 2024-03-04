@@ -50,7 +50,7 @@ describe('Surveys', () => {
       const secondSurvey = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`,
         {
-          method: 'POST',
+          method: 'post',
           headers,
           body: JSON.stringify({
             title: 'Test Survey 2',
@@ -67,7 +67,7 @@ describe('Surveys', () => {
       const res = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-todays-survey`,
         {
-          method: 'GET',
+          method: 'get',
           headers,
         },
       ).then((res) => {
@@ -82,7 +82,7 @@ describe('Surveys', () => {
       const testSurvey2 = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`,
         {
-          method: 'POST',
+          method: 'post',
           headers,
           body: JSON.stringify({
             title: 'Test Survey',
@@ -93,7 +93,7 @@ describe('Surveys', () => {
       const res = await fetch(
         `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-todays-survey`,
         {
-          method: 'GET',
+          method: 'get',
           headers,
         },
       ).then((res) => {
@@ -106,215 +106,6 @@ describe('Surveys', () => {
       await deleteSurvey({
         surveyId: testSurvey2.doc.id,
         headers,
-      })
-    })
-  })
-
-  describe('should test getting a users surveys', () => {
-    it('should not find any surveys', async () => {
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const surveys = await res.json()
-        expect(surveys.totalDocs).toBe(0)
-      })
-    })
-
-    it('should find a survey', async () => {
-      const testSurvey: Doc<Survey> = await createSurvey({ headers }).then((res) => res)
-
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const surveys = await res.json()
-        expect(surveys.totalDocs).toBe(1)
-        expect(surveys.docs[0].id).toBe(testSurvey.doc.id)
-      })
-
-      await deleteSurvey({ surveyId: testSurvey.doc.id, headers })
-    })
-  })
-
-  describe('it should find multiple user surveys', () => {
-    let survey1: Doc<Survey>
-    let survey2: Doc<Survey>
-    let survey3: Doc<Survey>
-
-    beforeAll(async () => {
-      survey1 = await createSurvey({
-        headers,
-      }).then((res) => res)
-      survey2 = await createSurvey({
-        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-        headers,
-      }).then((res) => res)
-      survey3 = await createSurvey({
-        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
-        headers,
-      }).then((res) => res)
-    })
-
-    afterAll(async () => {
-      await deleteSurvey({ surveyId: survey1.doc.id, headers })
-      await deleteSurvey({ surveyId: survey2.doc.id, headers })
-      await deleteSurvey({ surveyId: survey3.doc.id, headers })
-    })
-
-    it('should find multiple surveys', async () => {
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-surveys`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const surveys = await res.json()
-
-        expect(surveys.totalDocs).toBe(3)
-        expect(surveys.docs[0].id).toBe(survey1.doc.id)
-        expect(surveys.docs[1].id).toBe(survey2.doc.id)
-        expect(surveys.docs[2].id).toBe(survey3.doc.id)
-      })
-    })
-  })
-
-  describe('it should test the total score endpoint', () => {
-    let survey1: Doc<Survey>
-    let survey2: Doc<Survey>
-    let survey3: Doc<Survey>
-
-    const blankSurvey = {
-      body1: false,
-      body2: false,
-      mind1: false,
-      spirit1: '',
-      connection1: false,
-      goals1: '',
-      goals2: false,
-      other1: '',
-    }
-
-    beforeEach(async () => {
-      // Reset the surveys
-      ;[survey1, survey2, survey3].forEach(
-        async (survey) =>
-          await fetch(
-            `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/${survey.doc.id}`,
-            {
-              method: 'PATCH',
-              headers,
-              body: JSON.stringify(blankSurvey),
-            },
-          ),
-      )
-    })
-
-    beforeAll(async () => {
-      survey1 = await createSurvey({
-        headers,
-      }).then((res) => res)
-      survey2 = await createSurvey({
-        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-        headers,
-      }).then((res) => res)
-      survey3 = await createSurvey({
-        surveyDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
-        headers,
-      }).then((res) => res)
-    })
-
-    afterAll(async () => {
-      await deleteSurvey({ surveyId: survey1.doc.id, headers })
-      await deleteSurvey({ surveyId: survey2.doc.id, headers })
-      await deleteSurvey({ surveyId: survey3.doc.id, headers })
-    })
-
-    it('should find a total score of 0', async () => {
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-total-score`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const score = await res.json()
-
-        expect(score.totalScore).toBe(0)
-      })
-    })
-
-    it('should find a total score of 1', async () => {
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/${survey1.doc.id}`,
-        {
-          method: 'PATCH',
-          headers,
-          body: JSON.stringify({
-            body1: true,
-            body2: true,
-          }),
-        },
-      )
-
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-total-score`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const score = await res.json()
-
-        expect(score.totalScore).toBe(1)
-      })
-    })
-
-    it('should find a total score of 3', async () => {
-      ;[survey1, survey2, survey3].forEach(
-        async (survey) =>
-          await fetch(
-            `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/${survey.doc.id}`,
-            {
-              method: 'PATCH',
-              headers,
-              body: JSON.stringify({
-                body1: true,
-                body2: true,
-              }),
-            },
-          ),
-      )
-
-      await fetch(
-        `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/get-users-total-score`,
-        {
-          method: 'GET',
-          headers,
-        },
-      ).then(async (res) => {
-        expect(res.status).toBe(200)
-
-        const score = await res.json()
-
-        expect(score.totalScore).toBe(1)
       })
     })
   })

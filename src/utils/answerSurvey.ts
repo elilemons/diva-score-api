@@ -8,10 +8,7 @@ type AnswerSurveyProps = {
   survey: Partial<Survey>
   answers: SurveyAnswers
 }
-export const answerSurvey = async ({
-  survey,
-  answers,
-}: AnswerSurveyProps): Promise<Partial<Survey>> => {
+export const answerSurvey = ({ survey, answers }: AnswerSurveyProps): Promise<Partial<Survey>> => {
   const answeredSurvey: Partial<Survey> = JSON.parse(JSON.stringify(survey)) // deep copy
   const questionKeys = Object.keys(answers)
   const questionSetKeys = questionKeys.map((questionKey) => questionKey.replace(/\d+/g, ''))
