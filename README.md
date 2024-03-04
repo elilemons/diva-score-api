@@ -13,7 +13,7 @@ This repo is using a shared types repo from [elilemons/diva-score-lib](https://g
 ```
 Host github.com*
   HostName github.com
-  IdentityFile ~/.ssh/FILENAME_OF_YOUR_lOCAL_SSH
+  IdentityFile ~/.ssh/FILENAME_OF_YOUR_LOCAL_SSH
 ```
 
 Note: To find the `FILENAME_OF_YOUR_lOCAL_SSH`, run `ls` in after running `cd ~/.ssh` and use the same key that you use to authenticate with your github account
