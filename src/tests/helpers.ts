@@ -69,14 +69,19 @@ export const deleteQuestionSets = async (headers: Headers): Promise<void> => {
 }
 
 type CreateSurveyProps = {
+  surveyDate?: string
   headers: Headers
 }
-export const createSurvey = async ({ headers }: CreateSurveyProps): Promise<Doc<Survey>> => {
+export const createSurvey = async ({
+  surveyDate,
+  headers,
+}: CreateSurveyProps): Promise<Doc<Survey>> => {
   return await fetch(`${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}`, {
     method: 'post',
     headers,
     body: JSON.stringify({
       title: 'Test Survey',
+      surveyDate,
     }),
   }).then((res) => res.json())
 }
