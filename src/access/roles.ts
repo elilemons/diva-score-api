@@ -40,7 +40,7 @@ export const isAdminOrRequestingSelf: FieldAccess = ({ req, id }) => {
   return false
 }
 
-export const isAdminOrUsersSurvey: Access = ({ req, id }) => {
+export const isAdminOrUsersSurvey: Access = ({ req }) => {
   if (req?.user?.id) {
     if (checkCollection('admins', req)) {
       return true
