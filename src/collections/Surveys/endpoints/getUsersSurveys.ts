@@ -8,7 +8,7 @@ export const getUsersSurveysEndpoint = async (
   next?: NextFunction,
 ) => {
   const {
-    query: { limit = 10 },
+    query: { limit = Number.MAX_SAFE_INTEGER },
     payload,
     user,
   } = req
