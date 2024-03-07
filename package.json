@@ -11,7 +11,7 @@
     "build:server": "tsc",
     "build": "yarn copyfiles && yarn build:payload && yarn build:server",
     "serve": "cross-env PAYLOAD_CONFIG_PATH=dist/payload.config.js NODE_ENV=production node dist/server.js",
-    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png}\" dist/",
+    "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,ico}\" dist/",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types; cp src/payload-types.ts ../z_lib/src/payload-types.ts",
     "generate:graphQLSchema": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:graphQLSchema",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
@@ -30,6 +30,7 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.8",
     "inline-css": "^4.0.2",
+    "nodemailer-sendgrid": "^1.0.3",
     "payload": "2.0.14",
     "qs": "^6.11.2"
   },
