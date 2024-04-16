@@ -7,6 +7,7 @@ import { getUsersSurveysEndpoint } from './endpoints/getUsersSurveys'
 import { getTodaysSurveyEndpoint } from './endpoints/getTodaysSurvey'
 import beforeChangeHook from './hooks/beforeChange'
 import { getUsersTotalScoreEndpoint } from './endpoints/getUsersTotalScore'
+import { getTotalGoalsMet } from './endpoints/getTotalGoalsMet'
 
 const Surveys: CollectionConfig = {
   slug: 'surveys',
@@ -37,6 +38,11 @@ const Surveys: CollectionConfig = {
       path: '/get-todays-survey',
       method: 'get',
       handler: getTodaysSurveyEndpoint,
+    },
+    {
+      path: '/get-total-goals-met',
+      method: 'get',
+      handler: getTotalGoalsMet,
     },
   ],
   defaultSort: '-surveyDate',
