@@ -130,27 +130,9 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
     title: 'Goals',
     questions: [
       {
-        requiredForSetPoint: false,
         blockType: 'questionBlock',
         questionFieldName: 'goals1',
         questionOrder: 1,
-        questionTextFields: {
-          question: 'What is one goal you have set for yourself in writing?',
-          answer: [
-            {
-              blockType: 'answerRichTextBlock',
-              answerRichTextFields: {
-                answerRichTextFieldLabel: '',
-                answerRichTextValue: null,
-              },
-            },
-          ],
-        },
-      },
-      {
-        blockType: 'questionBlock',
-        questionFieldName: 'goals2',
-        questionOrder: 2,
         requiredForSetPoint: true,
         questionTextFields: {
           question: 'Did you complete a major goal today?',
@@ -160,6 +142,24 @@ export const mockQuestionSets: Array<Partial<QuestionSet>> = [
               answerCheckboxFields: {
                 answerCheckboxValue: null,
                 answerCheckboxLabel: 'Y/N',
+              },
+            },
+          ],
+        },
+      },
+      {
+        requiredForSetPoint: false,
+        blockType: 'questionBlock',
+        questionFieldName: 'goals2',
+        questionOrder: 2,
+        questionTextFields: {
+          question: 'What is one goal you have set for yourself in writing?',
+          answer: [
+            {
+              blockType: 'answerRichTextBlock',
+              answerRichTextFields: {
+                answerRichTextFieldLabel: '',
+                answerRichTextValue: null,
               },
             },
           ],
