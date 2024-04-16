@@ -1,5 +1,11 @@
 import { Admin, QuestionBlock, QuestionSet, Survey, UserOnRequest } from '@elilemons/diva-score-lib'
-import { createQuestionSets, createSurvey, deleteSurvey, getAdmin } from '../../tests/helpers'
+import {
+  answerSurveyPerfectlyAPI,
+  createQuestionSets,
+  createSurvey,
+  deleteSurvey,
+  getAdmin,
+} from '../../tests/helpers'
 import { answerQuestion } from '../answerQuestion'
 import { scoreSurvey } from '../scoreSurvey'
 
@@ -28,26 +34,7 @@ describe('Score Survey', () => {
   })
 
   it('should get the best score possible', async () => {
-    const answeredSurvey = JSON.parse(JSON.stringify(surveyToScore))
-
-    answeredSurvey.surveyQuestionSets.map((qs: QuestionSet) => {
-      qs.questions.map((q: QuestionBlock) => {
-        switch (q.questionTextFields.answer[0].blockType) {
-          case 'answerCheckboxBlock':
-            return answerQuestion({
-              question: q,
-              answerValue: true,
-            })
-          case 'answerTextBlock' || 'answerRichTextBlock':
-            return answerQuestion({
-              question: q,
-              answerValue: 'true',
-            })
-          default:
-            break
-        }
-      })
-    })
+    const answeredSurvey = await answerSurveyPerfectlyAPI({ survey: surveyToScore })
 
     const result = await scoreSurvey(answeredSurvey)
 
@@ -68,8 +55,8 @@ describe('Score Survey', () => {
     const goalQuestionSet = answeredSurvey.surveyQuestionSets.find(
       (qs: QuestionSet) => qs.title === 'Goals',
     ) as QuestionSet
-    goalQuestionSet.questions[1] = answerQuestion({
-      question: goalQuestionSet.questions[1],
+    goalQuestionSet.questions[0] = answerQuestion({
+      question: goalQuestionSet.questions[0],
       answerValue: true,
     })
 
