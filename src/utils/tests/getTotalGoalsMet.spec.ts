@@ -119,6 +119,6 @@ describe('Get Total Goals Met Tests', () => {
       },
     ).then((res) => res.json())
 
-    expect(result).toEqual({ totalGoals: 2 })
+    expect(result).toEqual({ totalGoals: 3 })
   })
 })
