@@ -203,9 +203,9 @@ describe('Surveys', () => {
       mind1: false,
       spirit1: '',
       connection1: false,
-      goals1: '',
-      goals2: false,
-      other1: '',
+      goals1: false,
+      goals2: '',
+      reflection1: '',
     }
 
     beforeEach(async () => {

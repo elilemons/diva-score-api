@@ -11,6 +11,7 @@ import Admins from './collections/Admins'
 import QuestionSets from './collections/QuestionSets'
 import Surveys from './collections/Surveys'
 import Users from './collections/Users'
+import DashboardStats from './components/DashboardStats'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
@@ -23,6 +24,9 @@ export default buildConfig({
   admin: {
     user: Admins.slug,
     bundler: webpackBundler(),
+    components: {
+      afterDashboard: [DashboardStats],
+    },
     webpack: (config) => ({
       ...config,
       resolve: {

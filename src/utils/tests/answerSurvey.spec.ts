@@ -31,8 +31,8 @@ describe('Answer Survey', () => {
       mind1: false,
       spirit1: '',
       connection1: false,
-      goals1: '',
-      goals2: false,
+      goals1: false,
+      goals2: '',
     }
 
     const answeredSurvey = await answerSurvey({
