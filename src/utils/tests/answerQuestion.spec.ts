@@ -33,7 +33,7 @@ describe('Answer Question', () => {
 
   it('should answer the question with "My goal today was to apply to 3 jobs!"', () => {
     const question: QuestionBlock = mockQuestionSets.find((qs: QuestionSet) => qs.title === 'Goals')
-      .questions[0]
+      .questions[1]
     const goal = 'My goal today was to apply to 3 jobs!'
     const result: QuestionBlock = answerQuestion({
       question,

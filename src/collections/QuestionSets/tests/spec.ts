@@ -82,8 +82,8 @@ describe('Question Sets', () => {
         ...mockQuestionSets.find((qs: QuestionSet) => qs.title === 'Goals'),
       }
 
-      mockQuestionSet.questions[1] = answerQuestion({
-        question: mockQuestionSet.questions[1],
+      mockQuestionSet.questions[0] = answerQuestion({
+        question: mockQuestionSet.questions[0],
         answerValue: true,
       })
 
