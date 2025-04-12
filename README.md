@@ -26,3 +26,7 @@ Note: To find the `FILENAME_OF_YOUR_lOCAL_SSH`, run `ls` in after running `cd ~/
 - Create and fill out an `.env` file with the contents from the `.env.example` file
 - Run Yarn (if this fails on the `@elilemons/diva-score-lib` install, look above)
 - `yarn dev` will boot the payload express server up
+
+### Deployments
+
+This Payload app is hosted on PayloadCMS. It auto deploys on merge to the `main` branch.
