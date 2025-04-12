@@ -119,7 +119,8 @@ export const answerSurveyPerfectlyAPI = async ({
             question: q,
             answerValue: true,
           })
-        case 'answerTextBlock' || 'answerRichTextBlock':
+        case 'answerTextBlock':
+        case 'answerRichTextBlock':
           return answerQuestion({
             question: q,
             answerValue: 'true',

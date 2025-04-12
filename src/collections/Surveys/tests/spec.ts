@@ -197,32 +197,6 @@ describe('Surveys', () => {
     let survey2: Doc<Survey>
     let survey3: Doc<Survey>
 
-    const blankSurvey = {
-      body1: false,
-      body2: false,
-      mind1: false,
-      spirit1: '',
-      connection1: false,
-      goals1: false,
-      goals2: '',
-      reflection1: '',
-    }
-
-    beforeEach(async () => {
-      // Reset the surveys
-      ;[survey1, survey2, survey3].forEach(
-        async (survey) =>
-          await fetch(
-            `${process.env.PAYLOAD_PUBLIC_SERVER_URL}/api/${Surveys.slug}/${survey.doc.id}`,
-            {
-              method: 'PATCH',
-              headers,
-              body: JSON.stringify(blankSurvey),
-            },
-          ),
-      )
-    })
-
     beforeAll(async () => {
       survey1 = await createSurvey({
         headers,
