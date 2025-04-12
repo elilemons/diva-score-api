@@ -4,7 +4,7 @@ import Users from '..'
 import { json2csv } from 'json-2-csv'
 
 /**
- * Generates a CSV file of users based on the provided filters
+ * Generates a CSV file of all users (Filters don't work though and I do not know why)
  * @param req
  * @param res
  * @returns
@@ -23,6 +23,8 @@ const exportCSV = async (req: PayloadRequest, res: Response, next: NextFunction)
     // Get the current filter parameters
     const where = query.where ? JSON.parse(query.where as string) : {}
 
+    payload.logger.info(`Exporting users with filters: ${JSON.stringify(payload.Query)}`)
+
     // Fetch users with current filters
     const users = await payload.find({
       collection: Users.slug,
@@ -36,7 +38,7 @@ const exportCSV = async (req: PayloadRequest, res: Response, next: NextFunction)
       firstName: user.firstName,
       lastName: user.lastName,
       createdAt: user.createdAt,
-      verified: user.verified,
+      verified: user.verified ? 'Yes' : 'No',
       // Add any other fields you want to export
     }))
 

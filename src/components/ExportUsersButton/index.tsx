@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { useAuth } from 'payload/components/utilities'
 import { User } from '../../payload-types'
-// import { useParams } from 'react-router-dom'
 
 const ExportUsersButton: React.FC = () => {
-  // const [searchParams] = useParams()
   const [isExporting, setIsExporting] = React.useState(false)
   const { user } = useAuth<User>()
 
