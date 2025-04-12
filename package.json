@@ -30,8 +30,9 @@
     "express": "^4.17.1",
     "handlebars": "^4.7.8",
     "inline-css": "^4.0.2",
+    "json-2-csv": "^5.5.9",
     "nodemailer-sendgrid": "^1.0.3",
-    "payload": "2.0.14",
+    "payload": "2.32.2",
     "qs": "^6.11.2"
   },
   "devDependencies": {

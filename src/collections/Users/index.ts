@@ -3,6 +3,7 @@ import { isAdminOrRequestingSelf } from '../../access/roles'
 import generateForgotPasswordEmail from './emails/generateForgotPasswordEmail'
 import generateVerifyEmail from './emails/generateVerifyEmail'
 import generateForgotPasswordToken from './endpoints/generateForgotPasswordToken'
+import exportCSV from './endpoints/export-csv'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -26,6 +27,11 @@ const Users: CollectionConfig = {
     delete: isAdminOrRequestingSelf,
   },
   endpoints: [
+    {
+      path: '/export-csv',
+      method: 'get',
+      handler: exportCSV,
+    },
     {
       path: '/generate-forgot-password-token',
       method: 'get',
