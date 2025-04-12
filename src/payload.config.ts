@@ -12,6 +12,7 @@ import QuestionSets from './collections/QuestionSets'
 import Surveys from './collections/Surveys'
 import Users from './collections/Users'
 import DashboardStats from './components/DashboardStats'
+import ExportUsersButton from './components/ExportUsersButton'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env'),
@@ -26,6 +27,7 @@ export default buildConfig({
     bundler: webpackBundler(),
     components: {
       afterDashboard: [DashboardStats],
+      actions: [ExportUsersButton],
     },
     webpack: (config) => ({
       ...config,
