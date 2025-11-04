@@ -5,7 +5,7 @@ import testCredentials from '../collections/Admins/tests/credentials'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config({
-  path: resolve(__dirname, '../../.env'),
+  path: resolve(__dirname, '../../.env.development'),
 })
 
 const app = express()
