@@ -30,3 +30,7 @@ Note: To find the `FILENAME_OF_YOUR_lOCAL_SSH`, run `ls` in after running `cd ~/
 ### Deployments
 
 This Payload app is hosted on PayloadCMS. It auto deploys on merge to the `main` branch.
+
+
+## Tests
+`yarn test`
