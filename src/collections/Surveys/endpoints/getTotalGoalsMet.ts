@@ -5,7 +5,7 @@ import Surveys from '..'
 
 // This is an unauthenticated endpoint
 export const getTotalGoalsMet = async (req: PayloadRequest, res: Response, next?: NextFunction) => {
-  const { payload, user } = req
+  const { payload } = req
 
   try {
     // Find surveys where the survey user is the same as the user attached to the request
