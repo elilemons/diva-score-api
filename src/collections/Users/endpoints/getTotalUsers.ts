@@ -1,4 +1,4 @@
-import { NextFunction } from 'express'
+import { NextFunction, Response } from 'express'
 import { PayloadRequest } from 'payload/types'
 import Users from '..'
 
@@ -10,9 +10,9 @@ export const getTotalUsers = async (req: PayloadRequest, res: Response, next?: N
       .count({
         collection: Users.slug,
       })
-      .then((res) => res.totalDocs)
+      .then((res) => res)
 
-    return totalUsers
+    return res.json({ totalUsers: totalUsers.totalDocs })
   } catch (error) {
     next(error)
   }

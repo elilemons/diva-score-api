@@ -2,8 +2,9 @@ import { CollectionConfig } from 'payload/types'
 import { isAdminOrRequestingSelf } from '../../access/roles'
 import generateForgotPasswordEmail from './emails/generateForgotPasswordEmail'
 import generateVerifyEmail from './emails/generateVerifyEmail'
-import generateForgotPasswordToken from './endpoints/generateForgotPasswordToken'
 import exportCSV from './endpoints/export-csv'
+import generateForgotPasswordToken from './endpoints/generateForgotPasswordToken'
+import { getTotalUsers } from './endpoints/getTotalUsers'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -36,6 +37,11 @@ const Users: CollectionConfig = {
       path: '/generate-forgot-password-token',
       method: 'get',
       handler: generateForgotPasswordToken,
+    },
+    {
+      path: '/get-total-users',
+      method: 'get',
+      handler: getTotalUsers,
     },
   ],
   fields: [
